@@ -1,11 +1,11 @@
 <script>
 export default {
-  name: 'About'
+  name: 'Upper'
 }
 </script>
 
 <template>
-  <div class="about">
+  <div class="all">
     <div class="upper">
       <div class="text">
         <div class="text_u">
@@ -26,31 +26,25 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap');
-
-.about {
+.all {
   text-align:center;
   margin-top: 2%;
 }
-
-.about .upper {
+.upper {
   display:inline-flex;
 }
-
-.about .upper .video{
+.upper .video{
   border-radius: 20px;
   margin-right: 10%;
 }
-
-.about .upper .video:hover{
+.upper .video:hover{
   border: 10px solid yellow;
   opacity: 80%;
 }
-
-.about .upper .text {
+.upper .text {
   margin-top: 10%;
 }
-
-.about .upper .text .text_u h1 {
+.upper .text .text_u h1 {
   font-size: 60px;
   font-weight: 700;
   font-family: 'Mochiy Pop One', sans-serif;
@@ -59,15 +53,13 @@ export default {
   margin-left: 35%;
   margin-right: 35%;
 }
-
-.about .upper .text .text_l h1 {
+.upper .text .text_l h1 {
   font-size: 60px;
   font-weight: 700;
   font-family: 'Mochiy Pop One', sans-serif;
   margin-bottom: 50px;
 }
-
-.about .upper .text p {
+.upper .text p {
   color: rgb(100, 100, 100);
   font-size: 30px;
   font-weight: 300;
@@ -76,23 +68,22 @@ export default {
   margin-right: 10%;
   margin-bottom: 100px;
 }
-
 @media (max-width: 1100px) {
-  .about .upper {
+  .upper {
     display: flex;
     flex-direction: column;
   }
-  .about .upper .video{
+  .upper .video{
     display: none;
   }
-  .about .upper .text {
+  .upper .text {
     display: flex;
     flex-direction: column;
   }
-  .about .upper .text .text_u h1 {
+  .upper .text .text_u h1 {
     font-size: 40px;
   }
-  .about .upper .text .text_l h1 {
+  .upper .text .text_l h1 {
     font-size: 40px;
   }
   .about .upper .text p {
