@@ -1,10 +1,10 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
-import About from '@/components/About.vue'
+import Upper from '@/components/Upper.vue'
 
 export default {
   name: 'Home',
-  components: { Navbar, About }
+  components: { Navbar, Upper }
 }
 </script>
 
@@ -14,14 +14,10 @@ export default {
       <Navbar />
     </div>
     <div class="home_about">
-      <About />
+      <Upper />
     </div>
   </div>
 </template>
 
 <style>
-.home_about {
-  margin-top: 100px;
-  text-align: center;
-}
 </style>
