@@ -17,7 +17,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 20%;
   padding: 50px;
   background-color: black;
   text-align: center;
