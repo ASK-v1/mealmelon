@@ -1,11 +1,10 @@
 <script>
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import AreaChart from '@/components/AreaChart'
 
 export default {
   name: 'Calorie',
-  components: { Navbar, Footer, AreaChart },
+  components: { Navbar, Footer },
   data () {
     return {
       optionsActivity: [
@@ -16,22 +15,23 @@ export default {
         'Exteremly Active (twice a day exercise & physical job)'
       ],
       optionsGoal: [
+        'Aggressive Lose Weight (-25%)',
         'Lose Weight (-20%)',
         'Slowly Lose Weight (-10%)',
-        'Maintain Weight (0%)',
         'Slowly Gain Weight (+10%)',
-        'Gain Weight (+20%)'
-      ],
-      optionsTime: [
-        '4 weeks',
-        '8 weeks',
-        '12 weeks',
-        '16 weeks',
-        '20 weeks'
+        'Gain Weight (+20%)',
+        'Aggressive Gain Weight (+25%)'
       ],
       unit: 'Imperial',
+      onekilogram: 7700,
+      onePound: 3500,
+      error: false,
+      showResult: false,
+      errorMessage: 'Please make sure all fields are filled in correctly.',
       tdeeResult: '',
       bmrResult: '',
+      dailyCalorie: '',
+      dailyDeficitSurplus: '',
       pounds: '',
       feet: '',
       inches: '',
@@ -41,11 +41,30 @@ export default {
       age: '',
       gender: '',
       activity: '',
-      goal: '',
-      time: ''
+      goalDeficitSurplus: '',
+      goalWeight: '',
+      goalUpDown: '',
+      startDate: '',
+      endDate: '',
+      oneDayHowMany: '',
+      totalDays: ''
     }
   },
   methods: {
+    checkFilled () {
+      if (this.unit === 'Imperial') {
+        if (this.pounds && this.feet && this.inches && this.age && this.gender && this.activity && this.goalDeficitSurplus && this.goalWeight) {
+          this.showResult = true
+          this.error = false
+        } else this.error = true
+      }
+      if (this.unit === 'Metric') {
+        if (this.kilograms && this.meters && this.centimeters && this.age && this.gender && this.activity && this.goalDeficitSurplus && this.goalWeight) {
+          this.showResult = true
+          this.error = false
+        } else this.error = true
+      }
+    },
     bmr () {
       if (this.unit === 'Imperial') {
         if (this.gender === 'male') {
@@ -53,7 +72,8 @@ export default {
         } else if (this.gender === 'female') {
           this.bmrResult = 655.1 + ((4.35 * this.pounds) + (4.7 * (this.feet * 12 + Number(this.inches))) - (4.7 * this.age))
         }
-      } else {
+      }
+      if (this.unit === 'Metric') {
         if (this.gender === 'male') {
           this.bmrResult = 66.47 + ((13.75 * this.kilograms) + (5.003 * (this.meters * 100 + Number(this.centimeters))) - (6.755 * this.age))
         } else if (this.gender === 'female') {
@@ -74,9 +94,77 @@ export default {
         this.tdeeResult = this.bmrResult * 1.9
       }
     },
+    deficitAndSurplus () {
+      if (this.goalDeficitSurplus === 'Aggressive Lose Weight (-25%)') {
+        this.dailyCalorie = this.tdeeResult * 0.75
+        this.dailyDeficitSurplus = this.tdeeResult * 0.25
+      } else if (this.goalDeficitSurplus === 'Lose Weight (-20%)') {
+        this.dailyCalorie = this.tdeeResult * 0.8
+        this.dailyDeficitSurplus = this.tdeeResult * 0.2
+      } else if (this.goalDeficitSurplus === 'Slowly Lose Weight (-10%)') {
+        this.dailyCalorie = this.tdeeResult * 0.9
+        this.dailyDeficitSurplus = this.tdeeResult * 0.1
+      } else if (this.goalDeficitSurplus === 'Slowly Gain Weight (+10%)') {
+        this.dailyCalorie = this.tdeeResult * 1.1
+        this.dailyDeficitSurplus = this.tdeeResult * 0.1
+      } else if (this.goalDeficitSurplus === 'Gain Weight (+20%)') {
+        this.dailyCalorie = this.tdeeResult * 1.2
+        this.dailyDeficitSurplus = this.tdeeResult * 0.2
+      } else if (this.goalDeficitSurplus === 'Aggressive Gain Weight (+25%)') {
+        this.dailyCalorie = this.tdeeResult * 1.25
+        this.dailyDeficitSurplus = this.tdeeResult * 0.25
+      }
+    },
+    checkGoal () {
+      if (this.kilograms === this.goalWeight) {
+        this.showResult = false
+        this.error = true
+      } else if ((this.kilograms - this.goalWeight) > 0) {
+        if ((this.goalDeficitSurplus === 'Slowly Gain Weight (+10%)') ||
+          (this.goalDeficitSurplus === 'Gain Weight (+20%)') ||
+          (this.goalDeficitSurplus === 'Aggressive Gain Weight (+25%)')) {
+          this.showResult = false
+          this.error = true
+        }
+      } else if ((this.kilograms - this.goalWeight) < 0) {
+        if ((this.goalDeficitSurplus === 'Aggressive Lose Weight (-25%)') ||
+          (this.goalDeficitSurplus === 'Lose Weight (-20%)') ||
+          (this.goalDeficitSurplus === 'Slowly Lose Weight (-10%)')) {
+          this.showResult = false
+          this.error = true
+        }
+      }
+    },
+    goal () {
+      if (this.unit === 'Metric') {
+        if (this.kilograms - this.goalWeight > 0) {
+          this.goalUpDown = this.kilograms - this.goalWeight
+          const totalDayOneUnit = Math.round(this.onekilogram / this.dailyDeficitSurplus)
+          this.oneDayHowMany = 1 / totalDayOneUnit
+          this.totalDays = totalDayOneUnit * this.goalUpDown
+        }
+        if (this.kilograms - this.goalWeight < 0) {
+          this.goalUpDown = this.goalWeight - this.kilograms
+          const totalDayOneUnit = Math.round(this.onekilogram / this.dailyDeficitSurplus)
+          this.oneDayHowMany = 1 / totalDayOneUnit
+          this.totalDays = totalDayOneUnit * this.goalUpDown
+        }
+      }
+    },
+    date () {
+      const date = new Date()
+      this.startDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+      date.setDate(date.getDate() + this.totalDays)
+      this.endDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+    },
     calc () {
+      this.checkFilled()
       this.bmr()
       this.tdee()
+      this.deficitAndSurplus()
+      this.checkGoal()
+      this.goal()
+      this.date()
     }
   }
 }
@@ -87,17 +175,17 @@ export default {
     <div class="calorie_navbar">
       <Navbar />
     </div>
-    <div class="calorie_image">
+    <div class="body">
       <div class="calorie_body">
         <div class="inputs">
           <div class="select_unit">
             <q-btn-toggle
               v-model="unit"
-              class="my-custom-toggle"
+              class="unit-toggle"
               no-caps
               rounded
               unelevated
-              toggle-color="yellow"
+              toggle-color="black"
               color="white"
               text-color="black"
               size="20px"
@@ -106,31 +194,31 @@ export default {
                 {label: 'Metric', value: 'Metric'} ]"
             />
           </div>
-          <div v-if="unit === 'Imperial'"  class="imperial">
+          <div v-if="unit === 'Imperial'" class="imperial">
             <div class="imperial_inputs">
-              <q-input class="lbs" ref="lbsRef" filled type="number" v-model="pounds" label="Pounds" color="black" />
-              <q-input class="ft" ref="ftRef" filled type="number" v-model="feet" label="Feet" color="black" />
-              <q-input class="in" ref="inRef" filled type="number" v-model="inches" label="Inches" color="black" />
+              <q-input class="ft" filled type="number" v-model="feet" label="Feet" color="black" />
+              <q-input class="in" filled type="number" v-model="inches" label="Inches" color="black" />
+              <q-input class="pounds" filled type="number" v-model="pounds" label="Pounds" color="black" />
             </div>
           </div>
           <div v-if="unit === 'Metric'" class="metric">
             <div class="metric_inputs">
-              <q-input class="kg" ref="kgRef" filled type="number" v-model="kilograms" label="Kilograms" color="black" />
-              <q-input class="cm" ref="cmRef" filled type="number" v-model="meters" label="Meters" color="black" />
-              <q-input class="cm" ref="cmRef" filled type="number" v-model="centimeters" label="Centimeters" color="black" />
+              <q-input class="m" filled type="number" v-model="meters" label="Meters" color="black" />
+              <q-input class="cm" filled type="number" v-model="centimeters" label="Centimeters" color="black" />
+              <q-input class="kg" filled type="number" v-model="kilograms" label="Kilograms" color="black" />
             </div>
           </div>
           <div class="select_age">
             <q-input class="age" ref="ageRef" filled type="number" v-model="age" label="Age" color="black" />
           </div>
           <div class="activity_level">
-            <q-select class="activity" rounded filled v-model="activity" :options="optionsActivity" label="Activity" color="black" />
+            <q-select class="activity" rounded filled v-model="activity" :options="optionsActivity" label="Activity Level" color="black" />
           </div>
-          <div class="your_goal">
-            <q-select class="goal" rounded filled v-model="goal" :options="optionsGoal" label="Goal" color="black" />
+          <div class="goal_deficit_surplus">
+            <q-select class="deficit_surplus" rounded filled v-model="goalDeficitSurplus" :options="optionsGoal" label="Goal Deficit/Surplus" color="black" />
           </div>
-          <div class="your_time">
-            <q-select class="time" rounded filled v-model="time" :options="optionsTime" label="Time" color="black" />
+          <div class="goalWeight">
+            <q-input class="goalWeight" filled type="number" v-model="goalWeight" label="Goal Weight" color="black" />
           </div>
           <div class="gender">
             <q-btn-toggle
@@ -143,45 +231,66 @@ export default {
             ]"/>
           </div>
           <div class="button">
+            <div v-if="error" class="error">
+              <q-icon name="error" size="30px"></q-icon>
+              <p>{{ errorMessage }}</p>
+            </div>
             <q-btn @click="calc" push class="done" color="black" label="CALCULATE" size="22px"/>
           </div>
         </div>
-        <div v-if="bmrResult" class="chart_results">
-          <div class="chart">
-            <AreaChart />
+        <div v-if="showResult && !error" class="results_date">
+          <div class="date">
+            <div class="start">
+              <q-icon name="date_range" size="30px"></q-icon>
+              <h5>Start Date:</h5>
+              <h4>{{ startDate }}</h4>
+            </div>
+            <div class="end">
+              <q-icon name="date_range" size="30px"></q-icon>
+              <h5>End Date:</h5>
+              <h4>{{ endDate }}</h4>
+            </div>
           </div>
           <div class="results">
             <div class="bmr">
-              <h5>Your BMR is</h5>
-              <h4>{{ Math.ceil(bmrResult) }}</h4>
+              <q-icon name="favorite" size="30px"/>
+              <h5>BMR</h5>
+              <h4>{{ Math.round(bmrResult) }}</h4>
+              <h5>Calories</h5>
             </div>
             <div class="tdee">
-              <h5>Your TDEE is</h5>
-              <h4>{{ Math.ceil(tdeeResult) }}</h4>
+              <q-icon name="local_fire_department" size="30px"/>
+              <h5>TDEE</h5>
+              <h4>{{ Math.round(tdeeResult) }}</h4>
+              <h5>Calories</h5>
+            </div>
+            <div class="daily">
+              <h5>Daily Calorie</h5>
+              <h4>{{ Math.round(dailyCalorie) }}</h4>
             </div>
           </div>
         </div>
       </div>
-      <q-banner class="info" >
-        <div class="bmr_info">
-          <h4>HOW DID WE CALCULATE YOUR BMR?</h4>
-          <p>Calculator uses the Harris-Benedict equation, which many experts consider to be the most accurate BMR calculation for most types of people.
-          <br>For men: BMR = 66.47 + (13.75 x weight in kg) + (5.003 x height in cm) - (6.755 x age in years)
-          <br>For women: BMR = 655.1 + (9.563 x weight in kg) + (1.850 x height in cm) - (4.676 x age in years)
-          </p>
-          <h4>WHAT IS BMR?</h4>
-          <p>
-          Basal Metabolic Rate (BMR) is how many calories you burn when your body is resting. BMR is the basic number of calories you need to sustain life. It’s the energy your body needs to keep your heart pumping, your circulation, lungs, brain, and other vital organs working, and your body temperature regulated.
-          </p>
-        </div>
-        <div class="tdee_info">
-          <h4>WHAT IS TDEE?</h4>
-          <p>
-          Total Daily Energy Expenditure (TDEE) is an estimation of how many calories you burn each day, including physical activity. It is calculated by multiplying your Basal Metabolic Rate (BMR) by 1.2 - 1.9 based on your activity level.
-          </p>
-        </div>
-      </q-banner>
     </div>
+    <q-banner class="info" >
+      <div class="bmr_info">
+        <h4>HOW DID WE CALCULATE YOUR BMR?</h4>
+        <p>Calculator uses the Harris-Benedict equation, which many experts consider to be the most accurate BMR calculation for most types of people.
+        <br>For men: BMR = 66.47 + (13.75 x weight in kg) + (5.003 x height in cm) - (6.755 x age in years)
+        <br>For women: BMR = 655.1 + (9.563 x weight in kg) + (1.850 x height in cm) - (4.676 x age in years)
+        </p>
+        <h4>WHAT IS BMR?</h4>
+        <p>
+        Basal Metabolic Rate (BMR) is how many calories you burn when your body is resting. BMR is the basic number of calories you need to sustain life. It’s the energy your body needs to keep your heart pumping, your circulation, lungs, brain, and other vital organs working, and your body temperature regulated.
+        </p>
+      </div>
+      <div class="tdee_info">
+        <h4>WHAT IS TDEE?</h4>
+        <p>
+        Total Daily Energy Expenditure (TDEE) is an estimation of how many calories you burn each day, including physical activity. It is calculated by multiplying your Basal Metabolic Rate (BMR) by 1.2 - 1.9 based on your activity level.
+        </p>
+      </div>
+    </q-banner>
     <div class="calorie_footer">
       <Footer />
     </div>
@@ -191,132 +300,219 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Roboto+Slab:wght@500;900&display=swap');
 
-.calorie .calorie_image {
-  background-image: url("../assets/calc.png");
-  background-size:cover;
-  background-repeat: no-repeat;
-  padding: 50px;
-  margin-top: 1%;
+.calorie .body {
+  background: linear-gradient(90deg, #bf3ae0, #ddd236, #da3788);
+  background-size: 500% 500%;
+  animation: grd 15s ease infinite;
+  border-radius: 30px;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
-.calorie .calorie_body .inputs {
-  padding: 40px;
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px, rgba(0, 0, 0, 0.05) 0px 2px 15px;
-  border-radius: 20px;
-  background-color: white;
+@keyframes grd {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .calorie .calorie_body {
   display: flex;
   flex-direction: row;
-  justify-content:center;
-  gap: 40px;
-}
-
-.calorie .chart_results {
-  display: flex;
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px, rgba(0, 0, 0, 0.05) 0px 2px 15px;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  align-content: center;
-  padding: 20px;
-  border-radius: 20px;
-  background-color: white;
+  align-items: center;
+  gap: 100px;
+  margin-top: 40px;
 }
 
 .calorie .calorie_body .inputs {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  padding: 40px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px, rgba(0, 0, 0, 0.05) 0px 2px 15px;
+  background-color: white;
+  gap: 20px;
+  margin-bottom: 40px;
+  margin-top: 40px;
+  border-radius: 20px;
 }
 
 .calorie .calorie_body .inputs .metric .metric_inputs {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 20px;
 }
 
 .calorie .calorie_body .inputs .imperial .imperial_inputs {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 20px;
 }
 
 .calorie .calorie_body .inputs .select_unit {
   display: flex;
   justify-content: center;
-  margin-bottom: 2%;
+  margin-bottom: 20px;
 }
 
-.calorie .calorie_body .inputs .button {
+.calorie .calorie_body .inputs .button .error {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto Slab', serif;
+  border: 1px solid rgb(255, 55, 55);
+  border-left: 10px solid rgb(255, 55, 55);
+  border-right: 10px solid rgb(255, 55, 55);
+  border-radius: 10px;
+  color: rgb(255, 0, 0);
+  width: 400px;
+  text-align: center;
+  gap: 10px;
+}
+
+.calorie .calorie_body .inputs .button .error p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.calorie .calorie_body .inputs .button .done {
+  display: flex;
+  margin-top: 20px;
+  width: 400px;
+}
+
+.calorie .calorie_body .inputs .gender {
   display: flex;
   justify-content: center;
-  margin-top: 5%;
 }
 
-.calorie .results {
+.calorie .results_date {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  margin-top: 5%;
-  gap: 30px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px, rgba(0, 0, 0, 0.05) 0px 2px 15px;
+  padding: 40px;
+  background-color: white;
+  margin-bottom: 40px;
+  border-radius: 20px;
   font-family: 'Roboto Slab', serif;
 }
 
-.calorie .chart_results .chart {
-  margin-bottom: 10%;
+.calorie .results_date:hover {
+  border: 10px solid rgb(255,255,0)
+}
+
+.calorie .results_date .date {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: 'Roboto Slab', serif;
+  margin-bottom: 20px;
+}
+
+.calorie .results_date .date .start {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid;
+}
+
+.calorie .results_date .date .end {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid;
+}
+
+.calorie .results_date .date h4 {
+  font-size: 24px;
+  margin-top: 1%;
+}
+
+.calorie .results_date .results .daily {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: rgb(0, 0, 0);
+  padding: 20px;
+  color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px, rgba(0, 0, 0, 0.05) 0px 2px 15px;
+}
+
+.calorie .results_date .results .bmr {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid;
+}
+
+.calorie .results_date .results .tdee {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  background-color: rgb(0, 0, 0);
+  padding: 10px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid;
+}
+
+.calorie .results_date .results {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: 'Roboto Slab', serif;
+}
+
+.calorie .results_date h4 {
+  font-weight: bold;
+  font-size: 30px;
 }
 
 .calorie .info {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border-radius: 30px;
+  border-radius: 10px;
   margin-left: 25%;
   margin-right: 25%;
   margin-top: 5%;
+  margin-bottom: 5%;
   font-family: 'Roboto Slab', serif;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px, rgba(0, 0, 0, 0.05) 0px 2px 15px;
   padding: 30px;
   background-color: white;
-
 }
 
-.calorie .info {
-  border-bottom: 10px solid rgb(255, 255, 0);
-  margin-bottom: 1%;
-}
-
-.calorie .info p {
-  font-size: 14px;
-  margin-top: 1%;
-  margin-bottom: 1%;
-}
-
-.calorie .info h4 {
+.calorie  h4 {
   font-size: 28px;
 }
 
-.calorie .chart_results .results .bmr {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
+@media (max-width: 1250px) {
+  .calorie .calorie_body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  .calorie .body {
+    margin-left: 0%;
+    margin-right: 0%;
+    border-radius: 0;
 }
-
-.calorie .chart_results .results .tdee {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
 }
-
-.calorie .chart_results .results h4 {
-  font-weight: bold;
-}
-
 </style>

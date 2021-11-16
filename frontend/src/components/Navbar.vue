@@ -10,7 +10,7 @@ export default {
       <router-link to="/" class="navbar_logo"><img src="../assets/logo.png"></router-link>
     </div>
     <div class="navbar_buttons">
-      <q-btn class="start" to="/start" label="Get Started For Free" outline color="yellow" size="18px" />
+      <q-btn class="start" to="/start" label="Get Started For Free" color="black" size="18px" />
       <q-btn class="login" to="/login" label="Log In" outline color="black" size="18px" />
     </div>
   </div>
