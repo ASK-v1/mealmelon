@@ -41,12 +41,11 @@ export default {
       age: '',
       gender: '',
       activity: '',
-      goalDeficitSurplus: '',
       goalWeight: '',
+      goalDeficitSurplus: '',
       goalUpDown: '',
       startDate: '',
       endDate: '',
-      oneDayHowMany: '',
       totalDays: ''
     }
   },
@@ -63,6 +62,26 @@ export default {
           this.showResult = true
           this.error = false
         } else this.error = true
+      }
+    },
+    checkGoal () {
+      if (this.kilograms === this.goalWeight || this.pounds === this.goalWeight) {
+        this.showResult = false
+        this.error = true
+      } else if ((this.kilograms - this.goalWeight) > 0 || (this.pounds - this.goalWeight) > 0) {
+        if ((this.goalDeficitSurplus === 'Slowly Gain Weight (+10%)') ||
+          (this.goalDeficitSurplus === 'Gain Weight (+20%)') ||
+          (this.goalDeficitSurplus === 'Aggressive Gain Weight (+25%)')) {
+          this.showResult = false
+          this.error = true
+        }
+      } else if ((this.kilograms - this.goalWeight) < 0 || (this.pounds - this.goalWeight) < 0) {
+        if ((this.goalDeficitSurplus === 'Aggressive Lose Weight (-25%)') ||
+          (this.goalDeficitSurplus === 'Lose Weight (-20%)') ||
+          (this.goalDeficitSurplus === 'Slowly Lose Weight (-10%)')) {
+          this.showResult = false
+          this.error = true
+        }
       }
     },
     bmr () {
@@ -115,38 +134,28 @@ export default {
         this.dailyDeficitSurplus = this.tdeeResult * 0.25
       }
     },
-    checkGoal () {
-      if (this.kilograms === this.goalWeight) {
-        this.showResult = false
-        this.error = true
-      } else if ((this.kilograms - this.goalWeight) > 0) {
-        if ((this.goalDeficitSurplus === 'Slowly Gain Weight (+10%)') ||
-          (this.goalDeficitSurplus === 'Gain Weight (+20%)') ||
-          (this.goalDeficitSurplus === 'Aggressive Gain Weight (+25%)')) {
-          this.showResult = false
-          this.error = true
-        }
-      } else if ((this.kilograms - this.goalWeight) < 0) {
-        if ((this.goalDeficitSurplus === 'Aggressive Lose Weight (-25%)') ||
-          (this.goalDeficitSurplus === 'Lose Weight (-20%)') ||
-          (this.goalDeficitSurplus === 'Slowly Lose Weight (-10%)')) {
-          this.showResult = false
-          this.error = true
-        }
-      }
-    },
     goal () {
       if (this.unit === 'Metric') {
-        if (this.kilograms - this.goalWeight > 0) {
+        if ((this.kilograms - this.goalWeight) > 0) {
           this.goalUpDown = this.kilograms - this.goalWeight
           const totalDayOneUnit = Math.round(this.onekilogram / this.dailyDeficitSurplus)
-          this.oneDayHowMany = 1 / totalDayOneUnit
           this.totalDays = totalDayOneUnit * this.goalUpDown
         }
-        if (this.kilograms - this.goalWeight < 0) {
+        if ((this.kilograms - this.goalWeight) < 0) {
           this.goalUpDown = this.goalWeight - this.kilograms
           const totalDayOneUnit = Math.round(this.onekilogram / this.dailyDeficitSurplus)
-          this.oneDayHowMany = 1 / totalDayOneUnit
+          this.totalDays = totalDayOneUnit * this.goalUpDown
+        }
+      }
+      if (this.unit === 'Imperial') {
+        if ((this.pounds - this.goalWeight) > 0) {
+          this.goalUpDown = this.pounds - this.goalWeight
+          const totalDayOneUnit = Math.round(this.onePound / this.dailyDeficitSurplus)
+          this.totalDays = totalDayOneUnit * this.goalUpDown
+        }
+        if ((this.pounds - this.goalWeight) < 0) {
+          this.goalUpDown = this.goalWeight - this.pounds
+          const totalDayOneUnit = Math.round(this.onePound / this.dailyDeficitSurplus)
           this.totalDays = totalDayOneUnit * this.goalUpDown
         }
       }
@@ -159,10 +168,10 @@ export default {
     },
     calc () {
       this.checkFilled()
+      this.checkGoal()
       this.bmr()
       this.tdee()
       this.deficitAndSurplus()
-      this.checkGoal()
       this.goal()
       this.date()
     }
@@ -242,12 +251,12 @@ export default {
           <div class="date">
             <div class="start">
               <q-icon name="date_range" size="30px"></q-icon>
-              <h5>Start Date:</h5>
+              <h5>Start Date</h5>
               <h4>{{ startDate }}</h4>
             </div>
             <div class="end">
               <q-icon name="date_range" size="30px"></q-icon>
-              <h5>End Date:</h5>
+              <h5>End Date</h5>
               <h4>{{ endDate }}</h4>
             </div>
           </div>
@@ -304,9 +313,11 @@ export default {
   background: linear-gradient(90deg, #bf3ae0, #ddd236, #da3788);
   background-size: 500% 500%;
   animation: grd 15s ease infinite;
-  border-radius: 30px;
+  border-radius: 100px;
   margin-left: 10%;
   margin-right: 10%;
+  border: 10px solid rgb(255, 255, 0);
+  margin-top: 40px;
 }
 
 @keyframes grd {
@@ -321,7 +332,6 @@ export default {
   justify-content: center;
   align-items: center;
   gap: 100px;
-  margin-top: 40px;
 }
 
 .calorie .calorie_body .inputs {
@@ -395,45 +405,43 @@ export default {
   padding: 40px;
   background-color: white;
   margin-bottom: 40px;
-  border-radius: 20px;
   font-family: 'Roboto Slab', serif;
-}
-
-.calorie .results_date:hover {
-  border: 10px solid rgb(255,255,0)
+  border-radius: 20px;
+  border: 5px solid;
 }
 
 .calorie .results_date .date {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex-direction: row;
+  gap: 30px;
   font-family: 'Roboto Slab', serif;
   margin-bottom: 20px;
 }
 
 .calorie .results_date .date .start {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 3px;
   padding: 10px;
   background-color: rgb(255, 255, 255);
   border: 1px solid;
+  border-radius: 10px;
 }
 
 .calorie .results_date .date .end {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 3px;
   padding: 10px;
   background-color: rgb(255, 255, 255);
   border: 1px solid;
+  border-radius: 10px;
 }
 
 .calorie .results_date .date h4 {
   font-size: 24px;
-  margin-top: 1%;
 }
 
 .calorie .results_date .results .daily {
@@ -441,11 +449,17 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px, rgba(0, 0, 0, 0.05) 0px 2px 15px;
   gap: 10px;
   background-color: rgb(0, 0, 0);
   padding: 20px;
   color: rgb(255, 255, 255);
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px, rgba(0, 0, 0, 0.05) 0px 2px 15px;
+  border-radius: 10px;
+}
+
+.calorie .results_date .results .daily:hover{
+  background-color: rgb(255, 255, 0);
+  cursor: pointer;
 }
 
 .calorie .results_date .results .bmr {
@@ -456,6 +470,7 @@ export default {
   padding: 10px;
   background-color: rgb(255, 255, 255);
   border: 1px solid;
+  border-radius: 10px;
 }
 
 .calorie .results_date .results .tdee {
@@ -467,6 +482,7 @@ export default {
   padding: 10px;
   background-color: rgb(255, 255, 255);
   border: 1px solid;
+  border-radius: 10px;
 }
 
 .calorie .results_date .results {
@@ -512,7 +528,6 @@ export default {
   .calorie .body {
     margin-left: 0%;
     margin-right: 0%;
-    border-radius: 0;
 }
 }
 </style>

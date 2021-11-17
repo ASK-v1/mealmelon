@@ -15,7 +15,7 @@ export default {
           <h1>Meal Planner</h1>
         </div>
         <p>Calculate your calorie and macro, create custom diet plans for weight loss.</p>
-        <q-btn to="/calorie" class="start" color="black" label="GET STARTED" size="25px"/>
+        <q-btn to="/calorie" class="start" rounded color="black" label="GET STARTED" size="25px"/>
       </div>
       <video class="video" width="400" autoplay loop muted>
         <source src="../assets/v.mp4" type="video/mp4">
