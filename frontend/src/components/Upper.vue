@@ -34,13 +34,12 @@ export default {
   display:inline-flex;
 }
 .upper .video{
-  border-radius: 20px;
+  border-radius: 50px;
   margin-right: 10%;
-}
-.upper .video:hover{
-  border: 10px solid yellow;
+  border: 5px solid rgb(255, 255, 0);
   opacity: 80%;
 }
+
 .upper .text {
   margin-top: 10%;
 }
@@ -52,12 +51,14 @@ export default {
   border-radius: 20% 80% 20% 40%;
   margin-left: 35%;
   margin-right: 35%;
+  color: rgba(0, 0, 0, 0.888);
 }
 .upper .text .text_l h1 {
   font-size: 60px;
   font-weight: 700;
   font-family: 'Mochiy Pop One', sans-serif;
   margin-bottom: 30px;
+  color: rgba(0, 0, 0, 0.888);
 }
 .upper .text p {
   color: rgb(100, 100, 100);
@@ -82,6 +83,7 @@ export default {
   }
   .upper .text .text_u h1 {
     font-size: 40px;
+    background: white;
   }
   .upper .text .text_l h1 {
     font-size: 40px;
