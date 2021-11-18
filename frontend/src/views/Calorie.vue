@@ -22,12 +22,15 @@ export default {
         'Gain Weight (+20%)',
         'Aggressive Gain Weight (+25%)'
       ],
+      whatTdee: 'Total Daily Energy Expenditure (TDEE) is an estimation of how many calories you burn each day, including physical activity. It is calculated by multiplying your Basal Metabolic Rate (BMR) by 1.2 - 1.9 based on your activity level.',
+      whatBmr: 'Basal Metabolic Rate (BMR) is how many calories you burn when your body is resting. BMR is the basic number of calories you need to sustain life. It’s the energy your body needs to keep your heart pumping, your circulation, lungs, brain, and other vital organs working, and your body temperature regulated.',
+      slide: 'bmr',
+      errorMessage: 'Please make sure all fields are filled in correctly.',
       unit: 'Imperial',
       onekilogram: 7700,
       onePound: 3500,
       error: false,
       showResult: false,
-      errorMessage: 'Please make sure all fields are filled in correctly.',
       tdeeResult: '',
       bmrResult: '',
       dailyCalorie: '',
@@ -281,25 +284,27 @@ export default {
         </div>
       </div>
     </div>
-    <q-banner class="info" >
-      <div class="bmr_info">
-        <h4>HOW DID WE CALCULATE YOUR BMR?</h4>
-        <p>Calculator uses the Harris-Benedict equation, which many experts consider to be the most accurate BMR calculation for most types of people.
-        <br>For men: BMR = 66.47 + (13.75 x weight in kg) + (5.003 x height in cm) - (6.755 x age in years)
-        <br>For women: BMR = 655.1 + (9.563 x weight in kg) + (1.850 x height in cm) - (4.676 x age in years)
-        </p>
-        <h4>WHAT IS BMR?</h4>
-        <p>
-        Basal Metabolic Rate (BMR) is how many calories you burn when your body is resting. BMR is the basic number of calories you need to sustain life. It’s the energy your body needs to keep your heart pumping, your circulation, lungs, brain, and other vital organs working, and your body temperature regulated.
-        </p>
-      </div>
-      <div class="tdee_info">
-        <h4>WHAT IS TDEE?</h4>
-        <p>
-        Total Daily Energy Expenditure (TDEE) is an estimation of how many calories you burn each day, including physical activity. It is calculated by multiplying your Basal Metabolic Rate (BMR) by 1.2 - 1.9 based on your activity level.
-        </p>
-      </div>
-    </q-banner>
+    <div class="slide">
+      <q-carousel
+        v-model="slide"
+        swipeable
+        animated
+        control-color="black"
+        navigation
+        padding
+        arrows
+        height="300px"
+        class="text-black shadow-5 rounded-borders">
+        <q-carousel-slide name="bmr" class="column no-wrap flex-center">
+          <h4>WHAT IS BMR?</h4>
+          <p>{{ whatBmr  }}</p>
+        </q-carousel-slide>
+        <q-carousel-slide name="tdee" class="column no-wrap flex-center">
+          <h4>WHAT IS TDEE?</h4>
+          <p>{{ whatTdee  }}</p>
+        </q-carousel-slide>
+      </q-carousel>
+    </div>
     <div class="calorie_footer">
       <Footer />
     </div>
@@ -497,23 +502,25 @@ export default {
   font-size: 30px;
 }
 
-.calorie .info {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  border-radius: 10px;
+.slide {
+  margin: 10%;
   margin-left: 25%;
   margin-right: 25%;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  font-family: 'Roboto Slab', serif;
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px, rgba(0, 0, 0, 0.05) 0px 2px 15px;
-  padding: 30px;
-  background-color: white;
 }
 
-.calorie  h4 {
-  font-size: 28px;
+.calorie .slide p {
+  font-size: 15px;
+  font-weight: 300;
+  font-family: 'Roboto Slab', serif;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.calorie .slide h4 {
+  font-size: 40px;
+  font-weight: 900;
+  font-family: 'Roboto Slab', serif;
+  text-align: center;
 }
 
 @media (max-width: 1250px) {
@@ -525,9 +532,15 @@ export default {
     gap: 40px;
     margin-top: 40px;
   }
+
   .calorie .body {
     margin-left: 0%;
     margin-right: 0%;
-}
+  }
+  .slide {
+    margin: 10%;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 </style>
