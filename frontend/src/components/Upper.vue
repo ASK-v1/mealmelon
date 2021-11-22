@@ -35,7 +35,6 @@ export default {
   border-radius: 50px;
   margin-right: 10%;
   border: 5px solid rgb(255, 255, 0);
-  opacity: 80%;
 }
 
 .upper .text {
