@@ -17,9 +17,7 @@ export default {
         <p>Calculate your calorie and macro, create custom diet plans for weight loss.</p>
         <q-btn to="/calorie" class="start" rounded color="black" label="GET STARTED" size="25px"/>
       </div>
-      <video class="video" width="400" autoplay loop muted>
-        <source src="../assets/v.mp4" type="video/mp4">
-      </video>
+      <img src="../assets/oat.jpg" height="700">
     </div>
   </div>
 </template>
@@ -33,7 +31,7 @@ export default {
 .upper {
   display:inline-flex;
 }
-.upper .video{
+.upper img {
   border-radius: 50px;
   margin-right: 10%;
   border: 5px solid rgb(255, 255, 0);
@@ -74,7 +72,7 @@ export default {
     display: flex;
     flex-direction: column;
   }
-  .upper .video{
+  .upper img{
     display: none;
   }
   .upper .text {

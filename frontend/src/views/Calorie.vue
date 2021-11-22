@@ -315,9 +315,9 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Roboto+Slab:wght@500;900&display=swap');
 
 .calorie .body {
-  background: linear-gradient(90deg, #ffaaff, #fff9a3, #acfbff);
+  background: linear-gradient(45deg, #ffaaff, #fff9a3, #acfbff);
   background-size: 500% 500%;
-  animation: grd 20s ease infinite;
+  animation: grd 40s ease infinite;
   border-radius: 100px;
   margin-left: 10%;
   margin-right: 10%;

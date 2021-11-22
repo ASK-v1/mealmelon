@@ -32,14 +32,23 @@ export default {
 </template>
 
 <style>
-.lower {
+.lower .what {
   margin-top: 200px;
-  background-image: linear-gradient(-45deg, #ffaaff 0%, #acfbff 100%);
+  background: linear-gradient(45deg, #ffaaff, #fff9a3, #acfbff);
+  background-size: 500% 500%;
+  animation: grd 40s ease infinite;
   padding: 100px;
   border-top: 5px solid rgb(255, 255, 0);
   border-top-right-radius: 100px;
   border-top-left-radius: 100px;
 }
+
+@keyframes grd {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .lower .what {
   display: flex;
   flex-direction: column;
