@@ -8,10 +8,10 @@ export default {
   <div class="all">
     <div class="upper">
       <div class="text">
-        <div class="text_u">
+        <div class="text-u">
           <h1>Easy</h1>
         </div>
-        <div class="text_l">
+        <div class="text-l">
           <h1>Meal Planner</h1>
         </div>
         <p>Calculate your calorie and macro, create custom diet plans for weight loss.</p>
@@ -42,7 +42,7 @@ export default {
 .upper .text {
   margin-top: 10%;
 }
-.upper .text .text_u h1 {
+.upper .text .text-u h1 {
   font-size: 60px;
   font-weight: 700;
   font-family: 'Mochiy Pop One', sans-serif;
@@ -52,7 +52,7 @@ export default {
   margin-right: 35%;
   color: rgba(0, 0, 0, 0.888);
 }
-.upper .text .text_l h1 {
+.upper .text .text-l h1 {
   font-size: 60px;
   font-weight: 700;
   font-family: 'Mochiy Pop One', sans-serif;
@@ -80,11 +80,11 @@ export default {
     display: flex;
     flex-direction: column;
   }
-  .upper .text .text_u h1 {
+  .upper .text .text-u h1 {
     font-size: 40px;
     background: white;
   }
-  .upper .text .text_l h1 {
+  .upper .text .text-l h1 {
     font-size: 40px;
   }
   .about .upper .text p {

@@ -184,13 +184,13 @@ export default {
 
 <template>
   <div class="calorie">
-    <div class="calorie_navbar">
+    <div class="calorie-navbar">
       <Navbar />
     </div>
     <div class="body">
-      <div class="calorie_body">
+      <div class="calorie-body">
         <div class="inputs">
-          <div class="select_unit">
+          <div class="select-unit">
             <q-btn-toggle
               v-model="unit"
               class="unit-toggle"
@@ -207,27 +207,27 @@ export default {
             />
           </div>
           <div v-if="unit === 'Imperial'" class="imperial">
-            <div class="imperial_inputs">
+            <div class="imperial-inputs">
               <q-input class="ft" filled type="number" v-model="feet" label="Feet" color="black" />
               <q-input class="in" filled type="number" v-model="inches" label="Inches" color="black" />
               <q-input class="pounds" filled type="number" v-model="pounds" label="Pounds" color="black" />
             </div>
           </div>
           <div v-if="unit === 'Metric'" class="metric">
-            <div class="metric_inputs">
+            <div class="metric-inputs">
               <q-input class="m" filled type="number" v-model="meters" label="Meters" color="black" />
               <q-input class="cm" filled type="number" v-model="centimeters" label="Centimeters" color="black" />
               <q-input class="kg" filled type="number" v-model="kilograms" label="Kilograms" color="black" />
             </div>
           </div>
-          <div class="select_age">
+          <div class="select-age">
             <q-input class="age" ref="ageRef" filled type="number" v-model="age" label="Age" color="black" />
           </div>
-          <div class="activity_level">
+          <div class="activity-level">
             <q-select class="activity" rounded filled v-model="activity" :options="optionsActivity" label="Activity Level" color="black" />
           </div>
-          <div class="goal_deficit_surplus">
-            <q-select class="deficit_surplus" rounded filled v-model="goalDeficitSurplus" :options="optionsGoal" label="Goal Deficit/Surplus" color="black" />
+          <div class="goal-deficit-surplus">
+            <q-select class="deficit-surplus" rounded filled v-model="goalDeficitSurplus" :options="optionsGoal" label="Goal Deficit/Surplus" color="black" />
           </div>
           <div class="goalWeight">
             <q-input class="goalWeight" filled type="number" v-model="goalWeight" label="Goal Weight" color="black" />
@@ -250,7 +250,7 @@ export default {
             <q-btn @click="calc" push class="done" color="black" label="CALCULATE" size="22px"/>
           </div>
         </div>
-        <div v-if="showResult && !error" class="results_date">
+        <div v-if="showResult && !error" class="results-date">
           <div class="date">
             <div class="start">
               <q-icon name="date_range" size="30px"></q-icon>
@@ -305,7 +305,7 @@ export default {
         </q-carousel-slide>
       </q-carousel>
     </div>
-    <div class="calorie_footer">
+    <div class="calorie-footer">
       <Footer />
     </div>
   </div>
@@ -331,7 +331,7 @@ export default {
   100% { background-position: 0% 50%; }
 }
 
-.calorie .calorie_body {
+.calorie .calorie-body {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -339,7 +339,7 @@ export default {
   gap: 100px;
 }
 
-.calorie .calorie_body .inputs {
+.calorie .calorie-body .inputs {
   display: flex;
   flex-direction: column;
   padding: 40px;
@@ -351,25 +351,25 @@ export default {
   border-radius: 20px;
 }
 
-.calorie .calorie_body .inputs .metric .metric_inputs {
+.calorie .calorie-body .inputs .metric .metric-inputs {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.calorie .calorie_body .inputs .imperial .imperial_inputs {
+.calorie .calorie-body .inputs .imperial .imperial-inputs {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.calorie .calorie_body .inputs .select_unit {
+.calorie .calorie-body .inputs .select-unit {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-.calorie .calorie_body .inputs .button .error {
+.calorie .calorie-body .inputs .button .error {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -385,25 +385,25 @@ export default {
   gap: 10px;
 }
 
-.calorie .calorie_body .inputs .button .error p {
+.calorie .calorie-body .inputs .button .error p {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 15px;
 }
 
-.calorie .calorie_body .inputs .button .done {
+.calorie .calorie-body .inputs .button .done {
   display: flex;
   margin-top: 20px;
   width: 400px;
 }
 
-.calorie .calorie_body .inputs .gender {
+.calorie .calorie-body .inputs .gender {
   display: flex;
   justify-content: center;
 }
 
-.calorie .results_date {
+.calorie .results-date {
   display: flex;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 5px, rgba(0, 0, 0, 0.05) 0px 2px 15px;
@@ -415,7 +415,7 @@ export default {
   border: 5px solid;
 }
 
-.calorie .results_date .date {
+.calorie .results-date .date {
   display: flex;
   flex-direction: row;
   gap: 30px;
@@ -423,7 +423,7 @@ export default {
   margin-bottom: 20px;
 }
 
-.calorie .results_date .date .start {
+.calorie .results-date .date .start {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -434,7 +434,7 @@ export default {
   border-radius: 10px;
 }
 
-.calorie .results_date .date .end {
+.calorie .results-date .date .end {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -445,11 +445,11 @@ export default {
   border-radius: 10px;
 }
 
-.calorie .results_date .date h4 {
+.calorie .results-date .date h4 {
   font-size: 24px;
 }
 
-.calorie .results_date .results .daily {
+.calorie .results-date .results .daily {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -462,12 +462,12 @@ export default {
   border-radius: 10px;
 }
 
-.calorie .results_date .results .daily:hover{
+.calorie .results-date .results .daily:hover{
   background-color: rgb(255, 255, 0);
   cursor: pointer;
 }
 
-.calorie .results_date .results .bmr {
+.calorie .results-date .results .bmr {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -478,7 +478,7 @@ export default {
   border-radius: 10px;
 }
 
-.calorie .results_date .results .tdee {
+.calorie .results-date .results .tdee {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -490,14 +490,14 @@ export default {
   border-radius: 10px;
 }
 
-.calorie .results_date .results {
+.calorie .results-date .results {
   display: flex;
   flex-direction: column;
   gap: 20px;
   font-family: 'Roboto Slab', serif;
 }
 
-.calorie .results_date h4 {
+.calorie .results-date h4 {
   font-weight: bold;
   font-size: 30px;
 }
@@ -524,7 +524,7 @@ export default {
 }
 
 @media (max-width: 1250px) {
-  .calorie .calorie_body {
+  .calorie .calorie-body {
     display: flex;
     flex-direction: column;
     justify-content: center;

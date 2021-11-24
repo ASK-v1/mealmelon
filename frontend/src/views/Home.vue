@@ -12,16 +12,16 @@ export default {
 
 <template>
   <div class="home">
-    <div class="home_navbar">
+    <div class="home-navbar">
       <Navbar />
     </div>
-    <div class="home_upper">
+    <div class="home-upper">
       <Upper />
     </div>
-    <div class="home_lower">
+    <div class="home-lower">
       <Lower />
     </div>
-    <div class="home_footer">
+    <div class="home-footer">
       <Footer />
     </div>
   </div>

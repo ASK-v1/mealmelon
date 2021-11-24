@@ -7,24 +7,24 @@ export default {
 <template>
   <div class="lower">
     <div class="what">
-      <div class="what_title">
+      <div class="what-title">
         <h1>What can you do on mealmelon?</h1>
       </div>
-      <div class="what_all">
-        <div class="what_goal">
+      <div class="what-all">
+        <div class="what-goal">
           <q-avatar color="yellow-7" text-color="white" size="150px">G</q-avatar>
           <h4>Goal</h4>
           <p>You can calculate daily calories and when you will reach your goal weight.</p>
         </div>
-        <div class="what_diet">
+        <div class="what-diet">
           <q-avatar color="yellow-7" text-color="white" size="150px">D</q-avatar>
           <h4>Diet</h4>
-          <p>You can choose popular diet plans such as vegan and ketogenic according to your needs and preferences.</p>
+          <p>You can choose popular diet plans such as low carb and ketogenic according to your needs and preferences.</p>
         </div>
-        <div class="what_create">
+        <div class="what-create">
           <q-avatar color="yellow-7" text-color="white" size="150px">C</q-avatar>
           <h4>Create</h4>
-          <p>You can create your meals for the week in a few minutes and save your diet plan.</p>
+          <p>You can create your daily meals in a few minutes.</p>
         </div>
       </div>
     </div>
@@ -55,29 +55,29 @@ export default {
   gap: 100px;
 }
 
-.lower .what .what_title {
+.lower .what .what-title {
   display: flex;
   justify-content: center;
 }
 
-.lower .what .what_title h1 {
+.lower .what .what-title h1 {
   font-size: 45px;
   font-weight: 700;
   font-family: 'Mochiy Pop One', sans-serif;
   color: rgba(0, 0, 0, 0.888);
 }
 
-.lower .what .what_all {
+.lower .what .what-all {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 100px;
   font-family: 'Roboto Slab', serif;
   margin-left: 15%;
-  margin-right: 15%;
+  margin-right: 20%;
 }
 
-.lower .what .what_all .what_goal{
+.lower .what .what-all .what-goal{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -85,7 +85,7 @@ export default {
   gap: 25px;
 }
 
-.lower .what .what_all .what_diet{
+.lower .what .what-all .what-diet{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -93,7 +93,7 @@ export default {
   gap: 25px;
 }
 
-.lower .what .what_all .what_create{
+.lower .what .what-all .what-create{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -101,7 +101,7 @@ export default {
   gap: 25px;
 }
 
-.lower .what .what_all p {
+.lower .what .what-all p {
   color: rgb(100, 100, 100);
   font-size: 20px;
   font-weight: 300;
@@ -110,7 +110,7 @@ export default {
 }
 
 @media (max-width: 1100px) {
-  .lower .what .what_all {
+  .lower .what .what-all {
     display: flex;
     flex-direction: column;
     margin-left: 0;
