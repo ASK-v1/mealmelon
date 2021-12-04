@@ -9,8 +9,8 @@
 <br />
 
 <p float="left">
-  <img src="frontend/src/assets/images/home.png" width="480px"/>
-  <img src="frontend/src/assets/images/calorie.png" width="480px"/>
+  <img src="frontend/src/assets/images/home.png" width="400px"/>
+  <img src="frontend/src/assets/images/calorie.png" width="400px"/>
 </p>
 
 # :construction_worker: Installation
