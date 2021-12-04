@@ -14,11 +14,11 @@ export default {
         <div class="text-l">
           <h1>Meal Planner</h1>
         </div>
-        <p>Calculate your calorie and macro, create custom diet plans for weight loss.</p>
-        <q-btn to="/calorie" class="start" rounded color="black" label="GET STARTED" size="25px"/>
+        <p>Calculate your calorie, create custom diet plans for weight loss and weight gain.</p>
+        <q-btn to="/meal" class="start" rounded color="black" label="GET STARTED" size="25px"/>
       </div>
       <video class="video" width="400" autoplay loop muted>
-        <source src="../assets/v.mp4" type="video/mp4">
+        <source src="../assets/video/v.mp4" type="video/mp4">
       </video>
     </div>
   </div>

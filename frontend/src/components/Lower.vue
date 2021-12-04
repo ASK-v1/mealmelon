@@ -14,17 +14,17 @@ export default {
         <div class="what-goal">
           <q-avatar color="yellow-7" text-color="white" size="150px">G</q-avatar>
           <h4>Goal</h4>
-          <p>You can calculate daily calories and when you will reach your goal weight.</p>
+          <p>You can calculate daily calories<br> and when you will reach<br> your goal weight.</p>
         </div>
         <div class="what-diet">
           <q-avatar color="yellow-7" text-color="white" size="150px">D</q-avatar>
           <h4>Diet</h4>
-          <p>You can choose popular diet plans such as low carb and ketogenic according to your needs and preferences.</p>
+          <p>You can choose popular diet plans such as low<br> carb and ketogenic according to your <br>needs and preferences.</p>
         </div>
         <div class="what-create">
           <q-avatar color="yellow-7" text-color="white" size="150px">C</q-avatar>
           <h4>Create</h4>
-          <p>You can create your daily meals in a few minutes.</p>
+          <p>You can create your daily<br> meals in a few<br> minutes.</p>
         </div>
       </div>
     </div>
@@ -73,27 +73,9 @@ export default {
   justify-content: center;
   gap: 100px;
   font-family: 'Roboto Slab', serif;
-  margin-left: 15%;
-  margin-right: 20%;
 }
 
-.lower .what .what-all .what-goal{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 25px;
-}
-
-.lower .what .what-all .what-diet{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 25px;
-}
-
-.lower .what .what-all .what-create{
+.lower .what .what-all .what-goal, .lower .what .what-all .what-diet, .lower .what .what-all .what-create{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -113,8 +95,6 @@ export default {
   .lower .what .what-all {
     display: flex;
     flex-direction: column;
-    margin-left: 0;
-    margin-right: 0;
   }
 }
 </style>

@@ -31,25 +31,25 @@ export default {
       onePound: 3500,
       error: false,
       showResult: false,
-      tdeeResult: '',
-      bmrResult: '',
-      dailyCalorie: '',
-      dailyDeficitSurplus: '',
-      pounds: '',
-      feet: '',
-      inches: '',
-      kilograms: '',
-      meters: '',
-      centimeters: '',
-      age: '',
+      tdeeResult: Number,
+      bmrResult: Number,
+      dailyCalorie: Number,
+      dailyDeficitSurplus: Number,
+      pounds: Number,
+      feet: Number,
+      inches: Number,
+      kilograms: Number,
+      meters: Number,
+      centimeters: Number,
+      age: Number,
+      goalWeight: Number,
+      goalUpDown: Number,
+      totalDays: Number,
+      goalDeficitSurplus: '',
       gender: '',
       activity: '',
-      goalWeight: '',
-      goalDeficitSurplus: '',
-      goalUpDown: '',
       startDate: '',
-      endDate: '',
-      totalDays: ''
+      endDate: ''
     }
   },
   methods: {
@@ -351,13 +351,7 @@ export default {
   border-radius: 20px;
 }
 
-.calorie .calorie-body .inputs .metric .metric-inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.calorie .calorie-body .inputs .imperial .imperial-inputs {
+.calorie .calorie-body .inputs .metric .metric-inputs, .calorie .calorie-body .inputs .imperial .imperial-inputs  {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -423,18 +417,7 @@ export default {
   margin-bottom: 20px;
 }
 
-.calorie .results-date .date .start {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 10px;
-  background-color: rgb(255, 255, 255);
-  border: 1px solid;
-  border-radius: 10px;
-}
-
-.calorie .results-date .date .end {
+.calorie .results-date .date .start, .calorie .results-date .date .end  {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -460,11 +443,6 @@ export default {
   padding: 20px;
   color: rgb(255, 255, 255);
   border-radius: 10px;
-}
-
-.calorie .results-date .results .daily:hover{
-  background-color: rgb(255, 255, 0);
-  cursor: pointer;
 }
 
 .calorie .results-date .results .bmr {
@@ -502,7 +480,7 @@ export default {
   font-size: 30px;
 }
 
-.slide {
+.calorie .slide {
   margin: 10%;
   margin-left: 25%;
   margin-right: 25%;
@@ -537,7 +515,7 @@ export default {
     margin-left: 0%;
     margin-right: 0%;
   }
-  .slide {
+  .calorie .slide {
     margin: 10%;
     margin-left: 0;
     margin-right: 0;

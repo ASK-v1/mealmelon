@@ -7,7 +7,7 @@ export default {
 <template>
   <div class="navbar">
     <div class="logo">
-      <router-link to="/" class="navbar-logo"><img src="../assets/logo.png"></router-link>
+      <router-link to="/" class="navbar-logo"><img src="../assets/images/logo.png"></router-link>
     </div>
     <div class="navbar-buttons">
       <q-btn class="start" to="/meal" label="Get Started For Free" outline color="black" size="20px" />

@@ -6,7 +6,7 @@ export default {
 
 <template>
   <div class="footer">
-    <img src="../assets/footer.png">
+    <img src="../assets/images/footer.png">
     <p>© 2021 mealmelon All rights reserved.</p>
   </div>
 </template>
